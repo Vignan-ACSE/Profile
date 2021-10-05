@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>REGISTRATION FORM</title>
+    <link rel="icon" href="vignan.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.6/jspdf.plugin.autotable.min.js"></script>
+
+    <script type="text/javascript" src="address.js"></script>
+    <script>
+        function getstr(str) {
+            var arr = str.toString().split(" ");
+            var max = 85;
+            var count = 0;
+            var check = 1;
+            var i;
+            var ans = ""
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].length + count <= max) {
+                    ans = ans + arr[i] + " ";
+                    count = count + arr[i].length + 1;
+                } else {
+                    ans = ans + "\n" + arr[i] + " ";
+                    count = 0;
+                    check = check + 1;
+                }
+            }
+            if (ans == "")
+                check = 0;
+            return [ans, check];
+        }
+
+        $(document).ready(function() {
+            var i = 1;
+            $('#add').click(function() {
+                i++;
+                $('#dynamic_field').append('<tr id="row' + i + '"><td><input type="text" name="name[]" placeholder="ENTER AREA OF INTEREST" class="form-control name_list" /></td><td><button type="button" name="remove" id="' + i + '" class="btn btn-danger btn_remove">X</button></td></tr>');
+            });
+            $(document).on('click', '.btn_remove', function() {
+                var button_id = $(this).attr("id");
+                $('#row' + button_id + '').remove();
+            });
+
+        });
+
+
+
+        function sentenceCase(str) {
+            return str.toUpperCase();
+        }
+
+        function get() {
+            var i;
+            var doc = new jsPDF("p", "mm", "a3", true);
+            doc.addImage(vignanlogo(), 'JPEG', 180, 5, 115, 40, '', 'FAST');
+            doc.setFont("times");
+            doc.setFillColor(255, 115, 0);
+            doc.rect(0, 14, 180, 13, "F");
+            doc.setFillColor(255, 115, 0);
+            doc.rect(0, 400, 350, 13, "F");
+            doc.setFontSize(22);
+            doc.setTextColor(255, 255, 255);
+            doc.text(40, 409, "DEPARTMENT OF COMPUTER SCIENCE AND ENGINEERING")
+            doc.text(5, 23, sentenceCase(document.getElementsByName("firstname")[0].value) + "  PROFILE");
+            var photo = document.getElementById("photo").getAttribute("src");
+            doc.addImage(photo, 'JPEG', 5, 50, 65, 80, '', 'FAST');
+
+
+            /*personal*/
+            doc.setTextColor(52, 118, 224);
+            doc.text(103, 65, document.getElementsByName("firstname")[0].value.toUpperCase() + "." + document.getElementsByName("lastname")[0].value.toUpperCase());
+            doc.setTextColor(0, 0, 0);
+            doc.text(103, 80, document.getElementById("designation").value);
+            doc.text(103, 95, document.getElementById("department").value);
+            doc.addImage(mail(), 'JPEG', 92, 103, 10, 10, '', 'FAST');
+            doc.text(103, 110, document.getElementById("email").value)
+            doc.addImage(phone(), 'JPEG', 92, 120, 10, 10, '', 'FAST');
+            doc.text(103, 127, document.getElementById("phonenumber").value)
+                //doc.save("a.pdf");
+                /*body*/
+            doc.setFontSize(18);
+            var edu = document.getElementsByName("QUALIFICATION[]");
+            var uni = document.getElementsByName("university[]");
+            var i;
+            var education = [];
+            var university = [];
+            for (i = 0; i < edu.length; i++) {
+                education.push(edu[i].value);
+                university.push(uni[i].value);
+            }
+            var k = 0;
+            for (i = 0; i < edu.length; i++) {
+                doc.setTextColor(52, 118, 224);
+                doc.text(40, 160 + k, "• ");
+                k += 10;
+            }
+            k = 0;
+            for (i = 0; i < edu.length; i++) {
+                doc.setTextColor(0, 0, 0);
+                doc.text(43, 160 + k, education[i] + "," + university[i]);
+                k += 10;
+            }
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 150, "EDUCATION:");
+            doc.setTextColor(0, 0, 0);
+
+            var pos = edu.length * 8;
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 170 + pos, "EXPERINCE:");
+            doc.setTextColor(0, 0, 0);
+            doc.text(50, 170 + pos, document.getElementsByName("years")[0].value + " YEAR " +
+                document.getElementsByName("months")[0].value + " MONTH'S");
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 180 + pos, "AREA OF INTEREST:");
+            var Area = []
+            var a = document.getElementsByName('name[]');
+            for (i = 0; i < a.length; i++)
+                Area.push(new Array(a[i].value));
+
+            k = ""
+            var length = 0;
+            for (i = 0; i < Area.length; i++) {
+                var tag = getstr(Area[i]);
+                k = k + "• " + tag[0] + "\n";
+                length += tag[1];
+            }
+            doc.setTextColor(0, 0, 0);
+            doc.text(10, 190 + pos, k);
+            pos += length * 7;
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 200 + pos, "PUBLICATIONS:")
+            doc.setTextColor(52, 118, 224);
+            doc.text(60, 210 + pos, "SCI:");
+            doc.setTextColor(0, 0, 0);
+            doc.text(90, 210 + pos, document.getElementsByName('sci')[0].value);
+            doc.setTextColor(52, 118, 224);
+            doc.text(60, 220 + pos, "SCOPUS:");
+            doc.setTextColor(0, 0, 0);
+            doc.text(90, 220 + pos, document.getElementsByName('scopus')[0].value);
+            doc.setTextColor(52, 118, 224);
+            doc.text(60, 230 + pos, "OTHERS:");
+            doc.setTextColor(0, 0, 0);
+            doc.text(90, 230 + pos, document.getElementsByName('others')[0].value);
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 240 + pos, "CERTIFICATION COURSE:")
+            var course = document.getElementsByName('name1[]');
+            var k = ""
+            for (i = 0; i < course.length; i++) {
+                k += "• " + course[i].value + "\n";
+            }
+            doc.setTextColor(0, 0, 0);
+            doc.text(60, 250 + pos, k);
+            pos = pos + course.length * 7;
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 260 + pos, "ACHIEVEMENTS:")
+            k = ""
+            var achi = document.getElementsByName('name4[]');
+            var length = 0;
+            for (i = 0; i < achi.length; i++) {
+                var tag = getstr(achi[i].value);
+                k = k + "• " + tag[0] + "\n";
+                length += tag[1];
+            }
+            doc.setTextColor(0, 0, 0);
+            doc.text(10, 270 + pos, k);
+            pos += length * 7;
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 280 + pos, "PROFESSIONAL MEMBERSHIP:")
+            doc.setTextColor(0, 0, 0);
+            doc.text(100, 280 + pos, document.getElementsByName('pm')[0].value);
+            doc.setTextColor(52, 118, 224);
+            doc.text(0, 290 + pos, "COURSES TAUGHT:")
+            var course = document.getElementsByName('name3[]');
+            k = ""
+            for (i = 0; i < course.length; i++)
+                if (i != course.length - 1)
+                    k += course[i].value + ', '
+                else {
+                    k += course[i].value
+                }
+            doc.setTextColor(0, 0, 0);
+            doc.text(10, 300 + pos, k);
+
+            window.open(doc.output('bloburl'))
+        }
+
+        function display() {
+            var years = document.getElementsByName("years")[0].value;
+            var months = document.getElementsByName("months")[0].value;
+            var firstname = document.getElementsByName("firstname")[0].value;
+            var lastname = document.getElementsByName("lastname")[0].value;
+            var designation = document.getElementById("designation").value;
+            var department = document.getElementById("department").value;
+            var email = document.getElementById("email").value;
+            var phonenumber = document.getElementById("phonenumber").value;
+            var areaofinterest = document.getElementsByName("name[]");
+            var BIOGRAPHY = document.getElementsByName("name1[]");
+            var coursename = document.getElementsByName("name3[]");
+            var courseid = document.getElementsByName("name2[]");
+            var photo = document.getElementById("photo").getAttribute("src");
+            var Qual = document.getElementsByName("QUALIFICATION[]");
+            var uni = document.getElementsByName("university[]");
+            var i;
+            if (years != "" && months != "" && firstname != "" && lastname != "" && designation != "DESIGNATION" && department != "DEPARTMENT" && email != "" && phonenumber != "" && photo != "profile.png") {
+
+                for (i = 0; i < areaofinterest.length; i++) {
+                    if (areaofinterest[i].value != "")
+                        continue;
+                    else
+                        break;
+                }
+                if (i == areaofinterest.length) {
+                    for (i = 0; i < BIOGRAPHY.length; i++) {
+                        if (BIOGRAPHY[i].value != "")
+                            continue;
+                        else
+                            break;
+                    }
+
+                    if (i == BIOGRAPHY.length) {
+                        for (i = 0; i < courseid.length; i++) {
+                            if (courseid[i].value != "")
+                                continue;
+                            else
+                                break;
+                        }
+
+                        if (i == courseid.length) {
+                            for (i = 0; i < coursename.length; i++) {
+                                if (coursename[i].value != "")
+                                    continue;
+                                else
+                                    break;
+                            }
+                            if (i == coursename.length) {
+                                for (i = 0; i < Qual.length; i++) {
+                                    if (Qual[i].value != "QUALIFICATION")
+                                        continue;
+                                    else
+                                        break;
+
+                                }
+                                if (i == Qual.length) {
+                                    for (i = 0; i < uni.length; i++) {
+                                        if (uni[i].value != "")
+                                            continue;
+                                        else
+                                            break;
+                                    }
+                                    if (i == uni.length) {
+                                        get();
+                                    } else
+                                        window.alert("FILL ALL FIELDS CORRECTLY")
+                                } else
+                                    window.alert("FILL ALL FIELDS CORRECTLY");
+                            } else
+                                window.alert("FILL ALL FIELDS CORRECTLY");
+                        } else
+                            window.alert("FILL ALL FIELDS CORRECTLY");
+                    } else
+                        window.alert("FILL ALL FIELDS CORRECTLY");
+                } else
+                    window.alert("FILL ALL FIELDS CORRECTLY");
+            } else
+                window.alert("FILL ALL FIELDS CORRECTLY");
+
+
+
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <img src="LOGO.JPG" width="300px" height="100px">
+    </div>
+    <hr>
+    <div class="body">
+        <div class="profile-pic-div">
+            <img src="profile.png" id="photo"><br>
+            <input type="file" id="file" accept="image/jpeg">
+            <label for="file" id="uploadBtn">Choose Photo</label>
+        </div>
+        <script>
+            const imgDiv = document.querySelector('.profile-pic-div');
+            const img = document.querySelector('#photo');
+            const file = document.querySelector('#file');
+            const uploadBtn = document.querySelector('#uploadBtn');
+
+            imgDiv.addEventListener('mouseenter', function() {
+                uploadBtn.style.display = "block"
+            });
+            imgDiv.addEventListener('mouseleave', function() {
+                uploadBtn.style.display = "none"
+            });
+            file.addEventListener('change', function() {
+                const choosedFile = this.files[0];
+                if (choosedFile) {
+                    const reader = new FileReader();
+                    reader.addEventListener('load', function() {
+                        img.setAttribute('src', reader.result);
+                    });
+                    reader.readAsDataURL(choosedFile);
+
+                }
+            })
+        </script>
+        <form style="margin-left: 200px;">
+            <fieldset>
+                <legend>DETAILS:</legend>
+                <input class="textbox" type="text" placeholder="First Name" name="firstname">
+                <input class="textbox" type="text" placeholder="Last Name" name="lastname" style="margin-left: 10px;">
+                </br>
+                </br>
+                <select id="designation" class="textbox">
+            <option value="DESIGNATION">DESIGNATION</option>
+            <option value="ASSISTANT PROFESSOR">ASSISTANT PROFESSOR</option>
+            <option value="PROFESSOR">PROFESSOR</option>
+          </select>
+                </br>
+                </br>
+                <select id="department" class="textbox">
+            <option  value="DEPARTMENT">DEPARTMENT</option>
+            <option value="CSE">CSE</option>
+          </select>
+                </br>
+                </br>
+                <div class="input-icons">
+                    <i class="fa fa-envelope icon fa-2x"></i>
+                    <input class="input-field" type="text" placeholder="MAIL" id="email">
+                </div>
+                <div class="input-icons">
+                    </BR>
+                    <i class="fa fa-phone icon fa-2x"></i>
+                    <input class="input-field" type="number" placeholder="PHONE NUMBER" id="phonenumber">
+                </div>
+            </fieldset>
+        </form>
+        <hr>
+        <form style="margin-left: 20px;">
+            <br>
+            <legend>EDUCATION:</legend>
+            <div class="container">
+                <div class="form-group">
+                    <div class="table-responsive">
+                        <table class="table " id="dynamic_field2">
+                            <tr>
+                                <td><select name="QUALIFICATION[]" class="textbox" placeholder="Qualification">
+                                        <option value="QUALIFICATION">QUALIFICATION</option>
+                                        <option value="UG">UG</option>
+                                        <option value="PG">PG</option>
+                                        <option value="PHD">PHD</option>
+                                    </select></td>
+                                <td><input class="textbox" type="text" placeholder="UNIVERSITY NAME" name="university[]"></td>
+                                <td><button type="button" name="add" id="add3" class="btn btn-success">Add More</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <h3>EXPERIENCE:</h3>
+            <input class="textbox" type="number" placeholder="YEARS" name="years" style="width:150px;margin-left: 180px;">
+            <input class="textbox" type="number" placeholder="MONTHS" name="months" style="width:150px;margin-left: 10px;">
+            <h3>AREA OF INTEREST:</h3>
+            <div class="container">
+                <div class="form-group">
+
+                    <div class="table-responsive">
+                        <table class="table " id="dynamic_field">
+                            <tr>
+                                <td><input type="text" name="name[]" placeholder="ENTER AREA OF INTEREST" class="form-control name_list" /></td>
+                                <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            <h3>PUBLICATIONS:</h3>
+            <h3 style="margin-left: 180px;">SCI:</h3>
+            </br>
+            <input class="textbox" type="number" placeholder="SCI" name="sci" style="width:150px;margin-left: 200px;">
+            <h3 style="margin-left: 180px;">SCOPUS</h3>
+            </br>
+            <input class="textbox" type="number" placeholder="SCOPUS" name="scopus" style="width:150px;margin-left: 200px;">
+            <h3 style="margin-left: 180px;">OTHERS:</h3>
+            </br>
+            <input class="textbox" type="number" placeholder="OTHERS" name="others" style="width:150px;margin-left: 200px;">
+            <h3>CERTIFICATION COURSES:</h3>
+            <div class="container">
+                <div class="form-group">
+
+                    <div class="table-responsive">
+                        <table class="table" id="dynamic_field1">
+                            <tr>
+                                <td><input type="text" name="name1[]" placeholder="COURSE NAME" class="form-control name_list" /></td>
+                                <td><button type="button" name="add" id="add1" class="btn btn-success">Add More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    var J = 1;
+                    $('#add1').click(function() {
+                        J++;
+                        $('#dynamic_field1').append('<tr id="row1' + J + '"><td><input type="text" name="name1[]" placeholder="COURSE NAME" class="form-control name_list" /></td><td><button type="button" name="remove" id="' + J + '" class="btn btn-danger btn_remove1">X</button></td></tr>');
+                    });
+                    $(document).on('click', '.btn_remove1', function() {
+                        var button_id = $(this).attr("id");
+                        $('#row1' + button_id + '').remove();
+                    });
+
+                });
+            </script>
+
+            <h3>ACHIEVEMENTS:</h3>
+            <div class="container">
+                <div class="form-group">
+
+                    <div class="table-responsive">
+                        <table class="table" id="dynamic_field10">
+                            <tr>
+                                <td><input type="text" name="name4[]" placeholder="ACHIEVEMENTS" class="form-control name_list" /></td>
+                                <td><button type="button" name="add" id="add10" class="btn btn-success">Add More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    var J = 1;
+                    $('#add10').click(function() {
+                        J++;
+                        $('#dynamic_field10').append('<tr id="row' + J + '"><td><input type="text" name="name4[]" placeholder="ACHIEVEMENTS" class="form-control name_list" /></td><td><button type="button" name="remove" id="' + J + '" class="btn btn-danger btn_remove10">X</button></td></tr>');
+                    });
+                    $(document).on('click', '.btn_remove10', function() {
+                        var button_id = $(this).attr("id");
+                        $('#row' + button_id + '').remove();
+                    });
+
+                });
+            </script>
+            <script>
+                $(document).ready(function() {
+                    var J = 1;
+                    $('#add3').click(function() {
+                        J++;
+                        $('#dynamic_field2').append('<tr id="row2' + J + '"><td><select name="QUALIFICATION[]" class="textbox" placeholder="Qualification"><option value="QUALIFICATION">QUALIFICATION</option><option value="UG">UG</option><option value="PG">PG</option><option value="PHD">PHD</option></td><td><input class="textbox" type="text" placeholder="UNIVERSITY NAME" name="university[]"></td><td><button type="button" name="remove" id="' + J + '" class="btn btn-danger btn_remove5">X</button ></tr > ');
+                    });
+                    $(document).on('click', '.btn_remove5', function() {
+                        var button_id = $(this).attr("id");
+                        $('#row2' + button_id + '').remove();
+                    });
+
+                });
+            </script>
+            <h3>PROFESSIONAL MEMBERSHIP:</h3>
+            </br>
+            <input class="textbox" type="text" placeholder="PROFESSIONAL MEMBERSHIP" name="pm" style="margin-left: 180px;">
+            <h3>COURSES</h3>
+            <div class="container">
+                <div class="form-group">
+
+                    <div class="table-responsive">
+                        <table class="table" id="dynamic_field3">
+                            <tr>
+                                <td><input type="text" name="name3[]" placeholder="COURSE NAME" class="form-control name_list" /></td>
+                                <td><button type="button" name="add" id="add2" class="btn btn-success">Add More</button></td>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                </div>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    var k = 1;
+                    $('#add2').click(function() {
+                        k++;
+                        $('#dynamic_field3').append('<tr id="row2' + k + '"><td><input type="text" name="name3[]" placeholder="COURSE NAME" class="form-control name_list" /></td><td><button type="button" name="remove" id="' + k + '" class="btn btn-danger btn_remove2">X</button></td></tr>');
+                    });
+                    $(document).on('click', '.btn_remove2', function() {
+                        var button_id = $(this).attr("id");
+                        $('#row2' + button_id + '').remove();
+                    });
+
+                });
+            </script>
+            <button type="button" class="sum" onclick="get()">submit</button>
+
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </br>
+            </fieldset>
+        </form>
+
+        <script>
+        </script>
+
+</body>
+
+</html>
