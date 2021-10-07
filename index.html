@@ -18,7 +18,7 @@
     <script>
         function getstr(str) {
             var arr = str.toString().split(" ");
-            var max = 75;
+            var max = 47;
             var count = 0;
             var check = 1;
             var i;
@@ -87,6 +87,8 @@
             doc.rect(0, 14, 180, 13, "F");
             doc.setFillColor(255, 115, 0);
             doc.rect(0, 400, 350, 13, "F");
+            //oc.setFillColor(242, 216, 189);
+           // doc.rect(0, 47, 350, 350, "F");
             doc.setFontSize(22);
             doc.setFont("times");
             doc.setFontType("bold")
@@ -123,13 +125,13 @@
             var k = 0;
             for (i = 0; i < edu.length; i++) {
                 doc.setTextColor(52, 118, 224);
-                doc.text(65, 160 + k, "• ");
+                doc.text(100, 160 + k, "• ");
                 k += 10;
             }
             k = 0;
             for (i = 0; i < edu.length; i++) {
                 doc.setTextColor(0, 0, 0);
-                doc.text(68, 160 + k, education[i] + "," + university[i]);
+                doc.text(103, 160 + k, education[i] + "," + university[i]);
                 k += 10;
             }
             doc.setTextColor(52, 118, 224);
@@ -140,7 +142,7 @@
             doc.setTextColor(52, 118, 224);
             doc.text(15, 170 + pos, "Experience:");
             doc.setTextColor(0, 0, 0);
-            doc.text(65, 170 + pos, document.getElementsByName("years")[0].value + " Years");
+            doc.text(103, 170 + pos, document.getElementsByName("years")[0].value + " Years");
             doc.setTextColor(52, 118, 224);
             doc.text(15, 180 + pos, "Research Area Of Interest:");
             var Area = []
@@ -148,7 +150,7 @@
             for (i = 0; i < a.length; i++)
                 Area.push(a[i].value);
 
-            var demo = getstr2(Area, 55);
+            var demo = getstr2(Area, 47);
             length = demo[1];
             doc.setTextColor(0, 0, 0);
             doc.text(100, 180 + pos, demo[0]);
@@ -175,10 +177,10 @@
             for (i = 0; i < course.length; i++) {
                 course1.push(course[i].value);
             }
-            var k = getstr2(course1, 55);
+            var k = getstr2(course1, 47);
             doc.setTextColor(0, 0, 0);
-            doc.text(95, 230 + pos, k[0]);
-            pos = pos + k[1] * 7;
+            doc.text(100, 230 + pos, k[0]);
+            pos = pos + k[1] * 8;
             doc.setTextColor(52, 118, 224);
             doc.text(15, 240 + pos, "Achievements:")
             k = ""
@@ -190,12 +192,12 @@
                 length += tag[1];
             }
             doc.setTextColor(0, 0, 0);
-            doc.text(25, 250 + pos, k);
+            doc.text(100, 250 + pos, k);
             pos += length * 8;
             doc.setTextColor(52, 118, 224);
             doc.text(15, 260 + pos, "Professional Membership:")
             doc.setTextColor(0, 0, 0);
-            doc.text(100, 260 + pos, document.getElementsByName('pm')[0].value.toUpperCase());
+            doc.text(103, 260 + pos, document.getElementsByName('pm')[0].value);
             doc.setTextColor(52, 118, 224);
             doc.text(15, 270 + pos, "Course Taught:")
             var course = document.getElementsByName('name3[]');
@@ -347,8 +349,9 @@
                 </br>
                 <select id="designation" class="textbox">
             <option value="DESIGNATION">DESIGNATION</option>
-            <option value="ASSISTANT PROFESSOR">ASSISTANT PROFESSOR</option>
-            <option value="PROFESSOR">PROFESSOR</option>
+            <option value="Assistant Professor">ASSISTANT PROFESSOR</option>
+            <option value="Associative Professor">ASSOCIATIVE PROFESSOR</option>
+            <option value="Professor">PROFESSOR</option>
           </select>
                 </br>
                 </br>
@@ -531,7 +534,7 @@
             <a class="btn btn-primary" style="width:225px;height:40px;font-size:18px;float: right;margin-right: 100px;text-align: center;" href="https://script.google.com/macros/s/AKfycbyKIMyn1rDxVCuFg3l0vUc7cpMCRdAOjxK8RFJ65Aal_8mV0t4AKbcMXo60cq4KOYfEOQ/exec" role="button"
                 target="_blank">Upload your pdf Here</a>
 
-            <button style="left: auto;color: lightcyan;font-stretch: ultra-expanded;" type="button" class="sum" onclick="get()">Preview PDF</button>
+            <button style="left: auto;color: lightcyan;font-stretch: ultra-expanded;" type="button" class="sum" onclick="display()">Preview PDF</button>
 
             <br>
             <br>
