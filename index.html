@@ -486,7 +486,7 @@
                     var J = 1;
                     $('#add3').click(function() {
                         J++;
-                        $('#dynamic_field2').append('<tr id="row2' + J + '"><td><select name="QUALIFICATION[]" class="textbox" placeholder="Qualification"><option value="QUALIFICATION">QUALIFICATION</option><option value="UG">UG</option><option value="PG">PG</option><option value="PHD">PHD</option></td><td><input class="textbox" type="text" placeholder="UNIVERSITY NAME" name="university[]"></td><td><button type="button" name="remove" id="' + J + '" class="btn btn-danger btn_remove5">X</button ></tr > ');
+                        $('#dynamic_field2').append('<tr id="row2' + J + '"><td><select name="QUALIFICATION[]" class="textbox" placeholder="Qualification"><option value="QUALIFICATION">QUALIFICATION</option><option value="B.Tech">B.Tech</option><option value="M.Tech">M.Tech</option><option value="Ph.D">Ph.D</option></td><td><input class="textbox" type="text" placeholder="UNIVERSITY NAME" name="university[]"></td><td><button type="button" name="remove" id="' + J + '" class="btn btn-danger btn_remove5">X</button ></tr > ');
                     });
                     $(document).on('click', '.btn_remove5', function() {
                         var button_id = $(this).attr("id");
