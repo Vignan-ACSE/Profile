@@ -16,11 +16,17 @@ img {
 }
 
 .profile-pic-div {
-    height: 150px;
-    width: 150px;
-    position: absolute;
-    top: 150px;
-    left: 10px;
+     position: absolute;
+        top: 150px;
+        left: 10px;
+        width: 170px;
+        height: 210px;
+        overflow: hidden;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        -ms-border-radius: 50%;
+        -o-border-radius: 50%;
+        border-radius: 50%;
 }
 
 #photo {
