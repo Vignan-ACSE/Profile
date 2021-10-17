@@ -521,8 +521,8 @@
         <img src="img.jpg" width="300px" height="100px">
     </div>
     <hr>
-    <div class="body">
-        <div class="profile-pic-div">
+    <div class="body" style="margin-left: 160px;">
+        <div class="profile-pic-div" style="height: 220px;width: 220px;margin-left: 100px;">
             <img src="profile1.png" id="photo"><br>
             <input type="file" id="file" accept="image/jpeg">
             <label for="file" id="uploadBtn" style="text-align: center;">Choose Photo</label>
@@ -584,7 +584,7 @@
             </fieldset>
         </form>
         <hr>
-        <form style="margin-left: 20px;">
+        <form>
             <br>
             <legend>QUALIFICATION:</legend>
             <div class="container">
@@ -607,11 +607,13 @@
             </div>
 
             <h3>EXPERIENCE:</h3>
-            <input class="textbox" type="number" placeholder="YEARS" name="years" style="width:150px;margin-left: 180px;">
+            <input class="textbox" type="number" placeholder="YEARS" name="years" style="width:150px;margin-left: 40px;">
+            <br>
+            <br>
+            <br>
             <h3>AREA OF INTEREST:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 6,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
             <div class="container">
                 <div class="form-group">
-
                     <div class="table-responsive">
                         <table class="table " id="dynamic_field">
                             <tr>
@@ -619,25 +621,24 @@
                                 <td><button type="button" name="add" id="add" class="btn btn-success">Add More</button></td>
                             </tr>
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <h3>PUBLICATIONS:</h3>
-            <h3 style="margin-left: 180px;">SCI:</h3>
+            <h3 style="margin-left: 100px;">SCI:</h3>
             </br>
-            <input class="textbox" type="number" placeholder="SCI" name="sci" style="width:150px;margin-left: 200px;">
-            <h3 style="margin-left: 180px;">SCOPUS</h3>
+            <input class="textbox" type="number" placeholder="SCI" name="sci" style="width:150px;margin-left: 180px;">
+            <h3 style="margin-left: 100px;">SCOPUS:</h3>
             </br>
-            <input class="textbox" type="number" placeholder="SCOPUS" name="scopus" style="width:150px;margin-left: 200px;">
-            <h3 style="margin-left: 180px;">OTHERS(CONFERENCES):</h3>
+            <input class="textbox" type="number" placeholder="SCOPUS" name="scopus" style="width:150px;margin-left: 180px;">
+            <h3 style="margin-left: 100px;">OTHERS(CONFERENCES):</h3>
             </br>
-            <input class="textbox" type="number" placeholder="OTHERS" name="others" style="width:150px;margin-left: 200px;">
-            <h3>CERTIFICATION COURSES:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 6,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
+            <input class="textbox" type="number" placeholder="OTHERS" name="others" style="width:150px;margin-left: 180px;">
+            <br>
+            <br>
+            <h3>CERTIFICATION COURSES:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 4,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
             <div class="container">
                 <div class="form-group">
-
                     <div class="table-responsive">
                         <table class="table" id="dynamic_field1">
                             <tr>
@@ -645,9 +646,7 @@
                                 <td><button type="button" name="add" id="add1" class="btn btn-success">Add More</button></td>
                             </tr>
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <script>
@@ -668,7 +667,6 @@
             <h3>ACHIEVEMENTS:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 2,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
             <div class="container">
                 <div class="form-group">
-
                     <div class="table-responsive">
                         <table class="table" id="dynamic_field10">
                             <tr>
@@ -676,9 +674,7 @@
                                 <td><button type="button" name="add" id="add10" class="btn btn-success">Add More</button></td>
                             </tr>
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <script>
@@ -709,13 +705,15 @@
 
                 });
             </script>
+            <br>
             <h3>PROFESSIONAL MEMBERSHIP:</h3>
-            </br>
-            <input class="textbox" type="text" placeholder="PROFESSIONAL MEMBERSHIP" name="pm" style="margin-left: 180px;">
-            <h3>COURSES Taught:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 6,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
+            <input class="textbox" type="text" placeholder="PROFESSIONAL MEMBERSHIP" name="pm" style="margin-left: 140px;">
+            <br>
+            <br>
+            <br>
+            <h3>COURSES TAUGHT:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 6,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
             <div class="container">
                 <div class="form-group">
-
                     <div class="table-responsive">
                         <table class="table" id="dynamic_field3">
                             <tr>
@@ -723,9 +721,7 @@
                                 <td><button type="button" name="add" id="add2" class="btn btn-success">Add More</button></td>
                             </tr>
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <script>
@@ -739,13 +735,11 @@
                         var button_id = $(this).attr("id");
                         $('#row2' + button_id + '').remove();
                     });
-
                 });
             </script>
             <h3>DEVELOPED E-CONTENT:<span class="warning"><sup class='warning'>*(Enter minimum 1 & maximum 6,make first letter of every word capital to make pdf beautiful)</sup></span></h3>
             <div class="container">
                 <div class="form-group">
-
                     <div class="table-responsive">
                         <table class="table" id="dynamic_field80">
                             <tr>
@@ -753,9 +747,7 @@
                                 <td><button type="button" name="add" id="add11" class="btn btn-success">Add More</button></td>
                             </tr>
                         </table>
-
                     </div>
-
                 </div>
             </div>
             <script>
@@ -772,11 +764,13 @@
 
                 });
             </script>
-            <span class="warning"> Note:To check preview of pdf click preview button below, if more space is available you can add some more values in the form  </span>
+            <span class="warning"> Note: To check preview of pdf click preview button below, if more space is available you can add some more values in the form  </span>
             <br>
-            <span class="warning"> Note:if the values or not sufficient remove the fields in the form to get pdf adjusted</span>
             <br>
-            <span class="warning"> Note:to upload the pdf download the best preview opened in the new tab</span>
+            <span class="warning"> Note: If the values or not sufficient remove the fields in the form to get pdf adjusted</span>
+            <br>
+            <br>
+            <span class="warning"> Note: When you are ready to upload the pdf, always download the best preview version which is opened in the new tab</span>
             <br>
             <br>
             <br>
@@ -785,7 +779,7 @@
             <a class="btn btn-primary" style="width:225px;height:40px;font-size:18px;float: right;margin-right: 100px;text-align: center;" href="https://docs.google.com/forms/d/e/1FAIpQLSfHu5XL7GGidKs0NELoXYnBaH3Ae2Zx9Va1IVQsAI9dcWwWgw/viewform?usp=sf_link" role="button"
                 target="_blank">Upload your pdf Here</a>
 
-            <button style="left: auto;color: lightcyan;font-stretch: ultra-expanded;" type="button" class="sum" onclick="display()">Preview PDF</button>
+            <button style="left: auto;color: lightcyan;font-stretch: ultra-expanded;background-color:orangered;" type="button" class="sum" onclick="display()">Preview PDF</button>
 
             <br>
             <br>
@@ -796,10 +790,8 @@
             <br>
             </fieldset>
         </form>
-
         <script>
         </script>
         <footer style="background-color: rgb(22, 201, 224);font-weight: bold;text-align: center;">Copyright © Vignan's Foundation for Science, Technology and Research (Deemed to be University) 2021. All rights reserved.Created by: CSE department</footer>
 </body>
-
 </html>
